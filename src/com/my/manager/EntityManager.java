@@ -23,19 +23,20 @@ public class EntityManager<T extends Entity> {
         entities = entities.stream().filter(en -> en.getId() == entity.getId()).collect(Collectors.toList());
     }
 
-    public void sort() {
-        entities.stream().sorted(Comparator.comparingInt(Entity::getId)).collect(Collectors.toList());
+    public final void sort() {
+        entities = entities.stream().sorted(Comparator.comparingInt(Entity::getId)).collect(Collectors.toList());
     }
 
-    public void addAll(T... _entities) {
+    @SafeVarargs
+    public final void addAll(T... _entities) {
         entities.addAll(Arrays.asList(_entities));
     }
 
-    public void print() {
+    public final void print() {
         entities.forEach(System.out::println);
     }
 
-    public List<T> map(Predicate<T> predicate) {
+    public final List<T> map(Predicate<T> predicate) {
         List<T> copy = new ArrayList<>();
         for (T e : entities) {
             if (predicate.test(e)) {
